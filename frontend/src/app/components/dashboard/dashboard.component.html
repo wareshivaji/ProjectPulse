@@ -1,0 +1,43 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="dashboard-container">
+    <h2>Welcome to Project Management System</h2>
+    
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="!isLoading">
+      <h3>Your Recent Projects</h3>
+      
+      <div *ngIf="recentProjects.length === 0">
+        <p>No recent projects found</p>
+      </div>
+  
+      <div *ngIf="recentProjects.length > 0" class="projects-grid">
+        <mat-card *ngFor="let project of recentProjects" class="project-card">
+          <mat-card-header>
+            <mat-card-title>{{ project.name }}</mat-card-title>
+            <mat-card-subtitle>Team: {{ project.team.name }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ project.description | truncate:100 }}</p>
+            <p><strong>Started:</strong> {{ project.startDate | date }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button [routerLink]="['/projects', project.id]">View Details</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+  
+      <div class="quick-actions">
+        <button mat-raised-button color="primary" routerLink="/projects">View All Projects</button>
+        <button 
+          *ngIf="isHR()"
+          mat-raised-button 
+          color="accent" 
+          routerLink="/teams">
+          Manage Teams
+        </button>
+      </div>
+    </div>
+  </div>

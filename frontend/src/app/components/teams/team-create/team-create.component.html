@@ -1,0 +1,31 @@
+<!-- src/app/components/teams/team-create/team-create.component.html -->
+<h2 mat-dialog-title>Create New Team</h2>
+<mat-dialog-content>
+  <form [formGroup]="teamForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Team Name</mat-label>
+      <input matInput formControlName="name" required>
+    </mat-form-field>
+
+    <h3>Select Team Members</h3>
+    <mat-selection-list>
+      <mat-list-option 
+        *ngFor="let user of data.users" 
+        [selected]="isUserSelected(user)"
+        (click)="toggleUserSelection(user)">
+        {{ user.firstName }} {{ user.lastName }} ({{ user.role.name }})
+      </mat-list-option>
+    </mat-selection-list>
+
+    <div class="form-actions">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="onSubmit()"
+        [disabled]="teamForm.invalid || selectedUsers.length === 0 || isLoading">
+        Create Team
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

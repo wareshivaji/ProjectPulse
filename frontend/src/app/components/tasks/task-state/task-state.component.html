@@ -1,0 +1,100 @@
+<!-- src/app/components/tasks/task-state/task-state.component.html -->
+<h2 mat-dialog-title>Project: {{ project.name }}</h2>
+<mat-dialog-content>
+  <div class="task-state-container">
+    <div class="state-column">
+      <h3>To Do</h3>
+      <div 
+        id="todo-list"
+        cdkDropList
+        [cdkDropListData]="todoTasks"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list">
+        <div *ngFor="let task of todoTasks" cdkDrag class="task-item">
+          <mat-card>
+            <mat-card-content>
+              <p><strong>Date:</strong> {{ task.date | date }}</p>
+              <p><strong>Description:</strong> {{ task.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-column">
+      <h3>In Progress</h3>
+      <div 
+        id="in-progress-list"
+        cdkDropList
+        [cdkDropListData]="inProgressTasks"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list">
+        <div *ngFor="let task of inProgressTasks" cdkDrag class="task-item">
+          <mat-card>
+            <mat-card-content>
+              <p><strong>Date:</strong> {{ task.date | date }}</p>
+              <p><strong>Description:</strong> {{ task.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-column">
+      <h3>Completed</h3>
+      <div 
+        id="completed-list"
+        cdkDropList
+        [cdkDropListData]="completedTasks"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list">
+        <div *ngFor="let task of completedTasks" cdkDrag class="task-item">
+          <mat-card>
+            <mat-card-content>
+              <p><strong>Date:</strong> {{ task.date | date }}</p>
+              <p><strong>Description:</strong> {{ task.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="create-state-form">
+    <h3>Create New Task State</h3>
+    <form [formGroup]="stateForm">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Stage</mat-label>
+        <mat-select formControlName="stage" required>
+          <mat-option *ngFor="let state of [StateType.TODO, StateType.IN_PROGRESS, StateType.COMPLETED]" [value]="state">
+            {{ state }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          (click)="onCreateState()"
+          [disabled]="stateForm.invalid || isCreatingState">
+          <span *ngIf="!isCreatingState">Create</span>
+          <mat-spinner *ngIf="isCreatingState" diameter="20"></mat-spinner>
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

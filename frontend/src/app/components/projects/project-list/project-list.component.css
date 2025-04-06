@@ -1,0 +1,24 @@
+.project-list-container {
+    padding: 20px;
+  }
+  
+  .project-list-container .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .project-list-container .table-container {
+    margin-top: 20px;
+  }
+  
+  .project-list-container .loading-spinner, 
+  .project-list-container .no-projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  /* Add any additional styles you need here */

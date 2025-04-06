@@ -1,0 +1,59 @@
+<div class="project-details-container">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="!isLoading && project" class="project-content">
+      <div class="project-header">
+        <h2>{{ project.name }}</h2>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          (click)="openTaskStateDialog()">
+          Set Current State
+        </button>
+      </div>
+  
+      <mat-divider></mat-divider>
+  
+      <div class="project-info">
+        <div class="info-section">
+          <h3>Description</h3>
+          <p>{{ project.description }}</p>
+        </div>
+  
+        <div class="info-section">
+          <h3>Tech Stack</h3>
+          <mat-chip-set>
+            <mat-chip *ngFor="let tech of project.techStack">{{ tech }}</mat-chip>
+          </mat-chip-set>
+        </div>
+  
+        <div class="info-row">
+          <div class="info-item">
+            <h3>Team</h3>
+            <p>{{ project.team.name }}</p>
+          </div>
+  
+          <div class="info-item">
+            <h3>Start Date</h3>
+            <p>{{ project.startDate | date }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="project-states" *ngIf="project.states.length > 0">
+        <h3>Project States</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let state of project.states">
+            <mat-icon matListItemIcon>
+              {{ getStateIcon(state.state) }}
+            </mat-icon>
+            <div matListItemTitle>{{ state.state }}</div>
+            <div matListItemLine>{{ state.description }}</div>
+            <div matListItemLine>{{ state.date | date }}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>

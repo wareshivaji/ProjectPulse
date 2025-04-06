@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Change User Role</h2>
+<mat-dialog-content>
+  <p>Current Role: <strong>{{ data.user.role.name }}</strong></p>
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>New Role</mat-label>
+    <mat-select [(value)]="selectedRole">
+      <mat-option *ngFor="let role of data.roles" [value]="role">
+        {{ role }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSave()"
+    [disabled]="!selectedRole || selectedRole === data.user.role.name || isLoading">
+    <span *ngIf="!isLoading">Save</span>
+    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+  </button>
+</mat-dialog-actions>
